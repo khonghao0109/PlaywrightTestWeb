@@ -1,0 +1,109 @@
+/* Mobile Nav Bar */
+.mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: none; /* Hidden by default */
+    justify-content: space-around;
+    align-items: center;
+    background: linear-gradient(90deg, #000000 0%, #E7D1BE 100%);
+    height: 60px;
+    z-index: 1000;
+    border-top: 1px solid #444;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.mobile-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.mobile-nav .nav-item i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.mobile-nav .nav-item.active {
+    color: #f0ad4e; /* A highlight color, you can change this */
+}
+
+/* Show the mobile nav only on smaller screens */
+@media (max-width: 768px) {
+    .mobile-nav {
+        display: flex;
+    }
+
+    body {
+        padding-bottom: 60px; /* Add padding to the bottom of the body to prevent content from being hidden by the nav bar */
+    }
+}
+
+.mobile-filter-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1002;
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-filter-panel.active {
+    right: 0;
+}
+
+.mobile-filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    display: none;
+}
+
+.mobile-filter-overlay.active {
+    display: block;
+}
+
+.mobile-filter-panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.mobile-filter-panel .panel-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.mobile-filter-panel .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.mobile-filter-panel .panel-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+

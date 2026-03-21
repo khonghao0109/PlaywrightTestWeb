@@ -1,0 +1,76 @@
+/* Sidebar Filter Styles */
+.filter-sidebar {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-top: 40px;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.filter-group-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    color: #333;
+}
+
+.filter-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.filter-list li a {
+    display: block;
+    padding: 8px 15px;
+    color: #555;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    margin-bottom: 5px;
+}
+
+.filter-list li a:hover,
+.filter-list li a.active {
+    background-color: #FE980F;
+    color: #fff;
+}
+
+.price-filter-form .form-group {
+    margin-bottom: 15px;
+}
+
+.price-filter-form .form-check {
+    margin-bottom: 10px;
+}
+
+.price-filter-form .form-check-label {
+    margin-left: 8px;
+    color: #555;
+}
+
+.price-filter-form .btn-apply-price {
+    width: 100%;
+}
+
+.btn-show-more {
+   text-align: center;
+    padding: 5px 0;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    border: 1px;
+    background: #fe980f;
+}
+
+.btn-show-more:hover {
+    text-decoration: underline;
+}

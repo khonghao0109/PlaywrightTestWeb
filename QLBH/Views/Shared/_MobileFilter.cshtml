@@ -1,0 +1,155 @@
+<div id="mobile-filter-panel" class="mobile-filter-panel">
+    <div class="panel-header">
+        <h3>Lọc sản phẩm</h3>
+        <button id="close-filter-panel" class="close-btn">&times;</button>
+    </div>
+    <div class="panel-content">
+        @{
+            var currentPriceRange = ViewBag.PriceRange as string ?? "";
+
+            // Giá mặc định theo giao diện (10.000đ - 2.000.000đ)
+            int defaultMinPrice = 10000;
+            int defaultMaxPrice = 2000000;
+            int minPrice = defaultMinPrice;
+            int maxPrice = defaultMaxPrice;
+
+            if (!string.IsNullOrWhiteSpace(currentPriceRange))
+            {
+                var parts = currentPriceRange.Split('-');
+                if (parts.Length == 2)
+                {
+                    if (int.TryParse(parts[0], out var parsedMin))
+                    {
+                        minPrice = parsedMin;
+                    }
+
+                    if (int.TryParse(parts[1], out var parsedMax) && parsedMax > 0)
+                    {
+                        maxPrice = parsedMax;
+                    }
+                }
+            }
+        }
+
+        <div class="sidebar-modern">
+            <!-- Danh mục sản phẩm -->
+            <div class="sidebar-card sidebar-card-categories">
+                <div class="sidebar-card-header">
+                    <span class="sidebar-card-title">Danh mục sản phẩm</span>
+                    <div class="sidebar-card-underline">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="sidebar-card-body">
+                    <vc:categories></vc:categories>
+                </div>
+            </div>
+
+            <!-- Thương hiệu -->
+            <div class="sidebar-card sidebar-card-brands">
+                <div class="sidebar-card-header">
+                    <span class="sidebar-card-title">Thương hiệu</span>
+                    <div class="sidebar-card-underline">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="sidebar-card-body">
+                    <vc:brands></vc:brands>
+                </div>
+            </div>
+
+            <!-- Lọc theo giá -->
+            <div class="sidebar-card sidebar-card-price">
+                <div class="sidebar-card-header">
+                    <span class="sidebar-card-title">Lọc theo giá</span>
+                    <div class="sidebar-card-underline">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="sidebar-card-body">
+                    <form asp-action="Index"
+                          asp-controller="Home"
+                          method="get"
+                          class="price-filter-form-modern"
+                          id="price-filter-form-mobile">
+                        <div class="price-range-wrapper">
+                            <div class="price-range-inputs">
+                                <input type="range"
+                                       id="price-min-range-mobile"
+                                       min="@defaultMinPrice"
+                                       max="@defaultMaxPrice"
+                                       step="10000"
+                                       value="@minPrice" />
+                                <input type="range"
+                                       id="price-max-range-mobile"
+                                       min="@defaultMinPrice"
+                                       max="@defaultMaxPrice"
+                                       step="10000"
+                                       value="@maxPrice" />
+                            </div>
+                            <div class="price-range-values">
+                                <span class="price-range-label">
+                                    Giá:
+                                    <strong id="price-min-display-mobile"></strong>
+                                    –
+                                    <strong id="price-max-display-mobile"></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <input type="hidden"
+                               name="priceRange"
+                               id="price-range-hidden-mobile"
+                               value="@currentPriceRange" />
+
+                        <button type="submit" class="btn btn-primary btn-price-apply">
+                            Lọc
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const minInput = document.getElementById('price-min-range-mobile');
+        const maxInput = document.getElementById('price-max-range-mobile');
+        const minDisplay = document.getElementById('price-min-display-mobile');
+        const maxDisplay = document.getElementById('price-max-display-mobile');
+        const hiddenInput = document.getElementById('price-range-hidden-mobile');
+
+        if (!minInput || !maxInput || !minDisplay || !maxDisplay || !hiddenInput) {
+            return;
+        }
+
+        const formatCurrency = (value) => {
+            const number = parseInt(value || '0', 10);
+            return number.toLocaleString('vi-VN') + ' đ';
+        };
+
+        const syncValues = () => {
+            let min = parseInt(minInput.value || '0', 10);
+            let max = parseInt(maxInput.value || '0', 10);
+
+            if (min > max) {
+                const tmp = min;
+                min = max;
+                max = tmp;
+                minInput.value = min;
+                maxInput.value = max;
+            }
+
+            minDisplay.textContent = formatCurrency(min);
+            maxDisplay.textContent = formatCurrency(max);
+            hiddenInput.value = `${min}-${max}`;
+        };
+
+        // Khởi tạo giá trị ban đầu (từ server hoặc mặc định)
+        syncValues();
+
+        minInput.addEventListener('input', syncValues);
+        maxInput.addEventListener('input', syncValues);
+    })();
+</script>

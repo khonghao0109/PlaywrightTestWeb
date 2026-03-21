@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CategoryModel>
+
+@{
+    var items = Model.Take(6).ToList();
+    var hiddenItems = Model.Skip(6).ToList();
+    var hasMoreItems = hiddenItems.Any();
+}
+
+<ul class="filter-list">
+    @foreach (var item in items)
+    {
+        <li>
+            <a asp-action="Index" asp-controller="Category" asp-route-Slug="@item.Slug">
+                @item.Name
+            </a>
+        </li>
+    }
+</ul>
+
+@if (hasMoreItems)
+{
+    <ul class="filter-list" id="hidden-categories" style="display: none;">
+        @foreach (var item in hiddenItems)
+        {
+            <li>
+                <a asp-action="Index" asp-controller="Category" asp-route-Slug="@item.Slug">
+                    @item.Name
+                </a>
+            </li>
+        }
+    </ul>
+    <button type="submit" class="btn btn-primary btn-price-apply" onclick="toggleVisibility('hidden-categories', this)">
+        Xem thêm
+    </button>
+}
+
+<script>
+    if (typeof toggleVisibility !== 'function') {
+        function toggleVisibility(id, button) {
+            const element = document.getElementById(id);
+            if (element) {
+                const isHidden = element.style.display === 'none';
+                element.style.display = isHidden ? 'block' : 'none';
+                button.textContent = isHidden ? 'Thu gọn' : 'Xem thêm';
+            }
+        }
+    }
+</script>

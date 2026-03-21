@@ -1,0 +1,95 @@
+﻿@model ProductModel
+@{
+    ViewData["title"] = "Edit Product";
+}
+<h3>Edit Product</h3>
+
+<div class="col-md-9">
+    <form autocomplete="off" asp-action="Edit" enctype="multipart/form-data">
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label>Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input asp-for="Price" pattern="[0-9.,]+" class="form-control typing-price" />
+
+            <span id="price-convert"></span>
+
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Real Price</label>
+            <input asp-for="RealPrice" pattern="[0-9.,]+" class="form-control" />
+            <span asp-validation-for="RealPrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea asp-for="Description" class="form-control"> </textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
+                <option>--Choose a category</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Brand</label>
+            <select asp-for="BrandId" class="form-control" asp-items="ViewBag.Brands">
+                <option>--Choose a brand</option>
+            </select>
+            <span asp-validation-for="BrandId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>DocumentId</label>
+            <input asp-for="DocumentId" class="form-control" />
+            <span asp-validation-for="DocumentId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Image</label>
+            <input asp-for="ImageUpload" class="form-control" />
+            <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            <img src="~/media/products/@Model.Image " width="120">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary">Update</button>
+
+        </div>
+
+
+    </form>
+    <a asp-action="Index">Back to list product</a>
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('Description');
+
+        CKEDITOR.on('instanceReady', function (ev) {
+            var editor = ev.editor;
+            editor.on('notificationShow', function (evt) {
+                if (evt.data.message.indexOf('The license key is missing or invalid') !== -1) {
+                    evt.cancel();
+                }
+            });
+        });
+    </script>
+}

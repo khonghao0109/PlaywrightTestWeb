@@ -1,0 +1,106 @@
+﻿@model IEnumerable<OrderModel>
+
+@{
+    ViewData["Title"] = "Lịch sử mua hàng";
+}
+
+
+<div class="account-history-page">
+    <div class="container mt-5">
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewBag.SuccessMessage
+            </div>
+        }
+        <h2 class="mb-4">Lịch sử mua hàng</h2>
+
+        @if (Model.Any())
+        {
+            foreach (var order in Model)
+            {
+                <div class="card order-card">
+                    <div class="card-header order-card-header">
+                        <div>
+                            <h5 class="mb-0">Mã đơn hàng: @order.OrderCode</h5>
+                            <small class="text-muted">Ngày đặt: @order.CreatedDate.ToString("dd/MM/yyyy")</small>
+                        </div>
+                        <div>
+                            @if (order.Status == 1) // Chờ thanh toán
+                            {
+                                <span class="badge bg-warning text-dark status-badge"> Chưa thanh toán</span>
+                            }
+                            else if (order.Status == 0) // Hoàn thành
+                            {
+                                <span class="badge bg-success status-badge">Đang xử lý</span>
+                            }
+                            else if (order.Status == 2) // Đã thanh toán
+                            {
+                                <span class="badge bg-primary status-badge">Đã thanh toán</span>
+                            }
+                            else // Đã hủy (status = 3 hoặc khác)
+                            {
+                                <span class="badge bg-danger status-badge">Đã hủy</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col" class="text-end">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in order.OrderDetails)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="~/media/products/@detail.Product.Image" alt="@detail.Product.Name"
+                                                    class="img-thumbnail product-image me-3">
+                                                <div>
+                                                    <h6 class="mb-0">@detail.Product.Name</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>@detail.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
+                                        <td>@detail.Quantity</td>
+                                        <td class="text-end">@((detail.Price * detail.Quantity).ToString("C0", new
+                                                                            System.Globalization.CultureInfo("vi-VN")))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div>
+                            @if (order.Status == 1)
+                            {
+                                <a onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')" class="btn btn-danger"
+                                    asp-action="CancelOrder" asp-controller="Account" asp-route-ordercode="@order.OrderCode">Hủy đơn
+                                    hàng</a>
+                            }
+                        </div>
+                        <div class="text-end">
+                            <strong>Tổng cộng: </strong>
+                            @{
+                                var total = order.OrderDetails.Sum(d => d.Price * d.Quantity);
+                            }
+                            <strong>@total.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</strong>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center">
+                <p>Bạn chưa có đơn hàng nào.</p>
+            </div>
+        }
+    </div>
+</div>

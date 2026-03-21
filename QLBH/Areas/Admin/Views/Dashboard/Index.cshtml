@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <style>
+        .stat-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card .icon {
+            font-size: 3em;
+            margin-right: 20px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #fff;
+        }
+        .stat-card .info h4 {
+            margin: 0;
+            font-size: 16px;
+            color: #888;
+        }
+        .stat-card .info p {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .icon-products { background-color: #17a2b8; }
+        .icon-categories { background-color: #28a745; }
+        .icon-orders { background-color: #ffc107; }
+        .icon-users { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h3>Dashboard Statistics</h3>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon icon-products">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="info">
+                    <h4>Sản phẩm</h4>
+                    <p>@ViewBag.CountProduct</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon icon-categories">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="info">
+                    <h4>Danh mục</h4>
+                    <p>@ViewBag.CountCategory</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon icon-orders">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="info">
+                    <h4>Đơn hàng</h4>
+                    <p>@ViewBag.CountOrder</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon icon-users">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="info">
+                    <h4>Người dùng</h4>
+                    <p>@ViewBag.CountUser</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Đơn hàng theo ngày</h4>
+            <div id="order-chart" style="height: 250px;"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Top 5 sản phẩm bán chạy</h4>
+            <div id="product-chart" style="height: 250px;"></div>
+        </div>
+        <div class="col-md-6">
+            <h4>Số lượng người dùng</h4>
+            <div id="user-chart" style="height: 250px;"></div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
+    <script>
+        $(document).ready(function () {
+            // Order Chart
+            $.ajax({
+                url: '@Url.Action("GetOrderChartData", "Dashboard")',
+                type: 'POST',
+                success: function (data) {
+                    new Morris.Line({
+                        element: 'order-chart',
+                        data: data,
+                        xkey: 'date',
+                        ykeys: ['count'],
+                        labels: ['Số đơn hàng']
+                    });
+                }
+            });
+
+            // Product Chart
+            $.ajax({
+                url: '@Url.Action("GetProductChartData", "Dashboard")',
+                type: 'POST',
+                success: function (data) {
+                    new Morris.Donut({
+                        element: 'product-chart',
+                        data: data
+                    });
+                }
+            });
+
+            // User Chart
+            $.ajax({
+                url: '@Url.Action("GetUserChartData", "Dashboard")',
+                type: 'POST',
+                success: function (data) {
+                    new Morris.Donut({
+                        element: 'user-chart',
+                        data: data
+                    });
+                }
+            });
+        });
+    </script>
+}
+</html>

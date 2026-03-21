@@ -1,0 +1,835 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();//Chỉ để Slider tại trang chủ
+    var action = ViewContext.RouteData.Values["action"]?.ToString();//Chỉ để Slider tại trang chủ
+    var isHomePage = controller == "Home" && action == "Index";
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home | WINDSHOP</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/responsive.css" rel="stylesheet">
+            <link rel="stylesheet" href="~/css/ProductDetail.css" />
+            <link rel="stylesheet" href="~/css/OrderHistory.css" />
+            <link rel="stylesheet" href="~/css/Cart.css" />
+            <link rel="stylesheet" href="~/css/Partial.css" />
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css" rel="stylesheet">
+            <link href="~/css/prettyPhoto.css" rel="stylesheet">
+
+                <link rel="stylesheet" href="~/css/Home.css" />
+                <link href="~/css/price-range.css" rel="stylesheet">
+                    <link href="~/css/animate.css" rel="stylesheet">
+                        <link href="~/css/main.css" rel="stylesheet">
+
+                            <link rel="stylesheet" href="~/css/Cart.css" asp-append-version="true" />
+                            <link rel="icon" type="image/png" href="~/images/logo.png">
+                                <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/images/ico/apple-touch-icon-144-precomposed.png">
+                                    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/images/ico/apple-touch-icon-114-precomposed.png">
+                                        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/images/ico/apple-touch-icon-72-precomposed.png">
+                                            <link rel="apple-touch-icon-precomposed" href="~/images/ico/apple-touch-icon-57-precomposed.png">
+
+                                                <link rel="stylesheet" href="~/css/site.css" />
+                                                <link rel="stylesheet" href="~/css/Layout.css" />
+                                                <link rel="stylesheet" href="~/css/MobileNav.css" />
+
+
+                                            </head><!--/head-->
+
+                                            <body class="@(isHomePage ? "home-page" : "")">
+                                                <header id="header">
+                                                    <div class="header_top">
+                                                        <div class="header-wrapper">
+
+
+                                                            <div class="logo-container">
+                                                                <a asp-action="Index" asp-controller="Home" class="logo-link">
+                                                                    <img src="~/images/logo.png" alt="WINDSHOP Logo" style="height: 46px;" />
+
+                                                                </a>
+                                                            </div>
+
+
+
+
+                                                            <div class="search-container">
+                                                                <form asp-controller="Product" asp-action="Search" method="post">
+                                                                    <div class="search_box">
+                                                                        <input type="text" placeholder="Nhập nội dung cần tìm..." name="keyword" />
+                                                                        <button type="submit" class="search-icon-btn">
+                                                                            <i class="fa fa-search"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+
+                                                            <div class="header-actions">
+                                                                <div class="header-action-item header-account">
+                                                                    @if (User.Identity?.IsAuthenticated ?? false)
+                                                                    {
+                                                                        <a asp-controller="Account" asp-action="History" class="header-action-btn account-btn">
+                                                                            <i class="fa fa-user"></i>
+                                                                            <span class="account-text">Hi, @User.Identity.Name</span>
+                                                                        </a>
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a asp-controller="Account" asp-action="Login" class="header-action-btn login-btn">
+                                                                            <i class="fa fa-lock"></i>
+                                                                            <span class="login-text">Login</span>
+                                                                        </a>
+                                                                    }
+                                                                </div>
+                                                                <div class="header-action-item header-cart">
+                                                                    @await Component.InvokeAsync("Cart")
+                                                                </div>
+                                                                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open Menu">
+                                                                    <div class="hamburger-icon">
+                                                                        <span></span>
+                                                                        <span></span>
+                                                                        <span></span>
+                                                                    </div>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="header-bottom">
+                                                        <div class="container">
+                                                            <div class="bottom-flex">
+
+                                                                <div class="category-menu-wrapper">
+                                                                    <button class="btn-category" onclick="openSidebar()">
+                                                                        <i class="fa fa-bars"></i>
+                                                                        <span>Danh mục</span>
+                                                                        <i class="fa fa-angle-down ml-2"></i>
+                                                                    </button>
+                                                                </div>
+
+                                                                <nav class="main-nav">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <a href="/brand/Steam">
+                                                                                <i class="fab fa-steam"></i> Game Steam
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="/brand/Steam">
+                                                                                <i class="fa fa-gamepad"></i> Game Online
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="/brand/Xbox">
+                                                                                <i class="fab fa-xbox"></i> Xbox Game Pass
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="/brand/Phần-Mềm-Bản-Quyền">
+                                                                                <i class="fa fa-user-shield"></i> Tài khoản bản quyền
+                                                                            </a>
+                                                                        </li>
+
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </header>
+
+                                                <!-- Overlay -->
+                                                <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+                                                <!-- Sidebar -->
+                                                <div class="sidebar" id="sidebar">
+                                                    <!-- Sidebar Header -->
+                                                    <div class="sidebar-header">
+                                                        <i class="fa fa-user-circle"></i>
+                                                        <span>Hello, Sign in</span>
+                                                        <button class="close-btn" id="closeBtn" aria-label="Close Menu">×</button>
+                                                    </div>
+
+
+
+                                                    <!-- Country & Currency Selectors -->
+
+
+                                                    <!-- Main Navigation -->
+                                                    <div class="sidebar-section">
+                                                        <div class="sidebar-section-title">Shop by Category</div>
+                                                        <ul class="sidebar-menu">
+                                                            @if (User.Identity?.IsAuthenticated ?? false)
+                                                            {
+                                                                <li>
+                                                                    <a asp-action="Index" asp-controller="Home">
+                                                                        <i class="fa fa-home"></i>
+                                                                        Home
+                                                                    </a>
+                                                                </li>
+                                                                <li class="has-dropdown">
+                                                                    <a href="#">
+                                                                        <i class="fa fa-shopping-bag"></i>
+                                                                        Shop
+                                                                    </a>
+                                                                    <ul class="sidebar-dropdown">
+                                                                        <li><a asp-action="Index" asp-controller="Category">All Categories</a></li>
+                                                                        <li><a asp-action="Detail" asp-controller="Product">Product Details</a></li>
+                                                                        <li><a asp-action="History" asp-controller="Account">Checkout</a></li>
+                                                                        <li><a asp-action="Index" asp-controller="Cart">Shopping Cart</a></li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li>
+                                                                    <a asp-action="Index" asp-controller="Cart">
+                                                                        <i class="fa fa-shopping-cart"></i>
+                                                                        Cart
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a a asp-action="History" asp-controller="Account">
+                                                                        <i class="fa fa-credit-card"></i>
+                                                                        Checkout
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <i class="fa fa-heart"></i>
+                                                                        Wishlist
+                                                                    </a>
+                                                                </li>
+                                                                <li class="dropdown">
+                                                                    <a asp-controller="Account" asp-action="Logout">
+                                                                        <i class="fa-solid fa-right-to-bracket"></i>Account</a>
+
+
+
+                                                                    </li>
+
+
+
+
+
+                                                                }
+                else
+                                                                {
+                                                                    <li><a asp-controller="Account" asp-action="Login"><i class="fa fa-lock"></i>Login</a></li>
+
+                                                                }
+                                                            </div>
+
+
+
+
+                                                        </div>
+
+
+
+
+
+
+
+
+
+
+                                                        <!--/header_top-->
+
+                                                        @* <div class="header-middle">
+			<!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="index.html"><img src="~/images/home/logo.png" alt="" /></a>
+						</div>
+						<div class="btn-group pull-right">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+									USA
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="#">Canada</a></li>
+									<li><a href="#">UK</a></li>
+								</ul>
+							</div>
+
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+									DOLLAR
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="#">Canadian Dollar</a></li>
+									<li><a href="#">Pound</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+
+								<li><a asp-action="Index" asp-controller="Cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								@if (User.Identity?.IsAuthenticated ?? false)
+								{
+									<li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-lock"></i>Hi, @User.Identity.Name</a></li>
+									<li><a asp-action="History" asp-controller="Account"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                    <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+									<li class="dropdown">
+										<a href="#"><i class="fa fa-angle-down"></i>Account</a>
+										<ul role="menu" class="sub-menu">
+											<li><a asp-controller="Dashboard" asp-action="Index" asp-area="Admin">Admin</a></li>
+										</ul>
+									</li>
+
+								}
+								else
+								{
+									<li><a asp-controller="Account" asp-action="Login"><i class="fa fa-lock"></i>Login</a></li>
+
+								}
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+
+		<div class="header-bottom">
+			<!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a asp-controller="Home" asp-action="Index" class="active">Home</a></li>
+								<li class="dropdown">
+									<a href="#">Shop<i class="fa fa-angle-down"></i></a>
+									<ul role="menu" class="sub-menu">
+										<li><a asp-action="Index" asp-controller="Category">Categories</a></li>
+										<li><a asp-controller="Product" asp-action="Details">Product Details</a></li>
+										<li><a asp-action="History" asp-controller="Account">Checkout</a></li>
+										<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
+
+									</ul>
+								</li>
+								<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<form asp-controller="Product" asp-action="Search" method="post">
+
+							<div class="search_box pull-right">
+								<input type="text" placeholder="Search" name="searchTerm" />
+								<button class="btn btn-warning" type="submit">Search</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-bottom--> *@
+                                                        <!--/header-->
+
+
+
+
+                                                        @if (controller == "Home" && action == "Index")//Chỉ để Slider tại trang chủ
+                                                        {
+
+                                                            <!-- PROMOTIONAL CARDS CAROUSEL -->
+                                                            <div class="promo-carousel-wrapper">
+                                                                <div class="promo-carousel-container" id="promoCarousel">
+                                                                    <!-- Card 1 - New Year Sale -->
+                                                                    <div class="promo-card" href="/brand/Steam">
+                                                                        <div class="promo-card-image">
+                                                                            <img src="~/images/game-steam.jpg" alt="New Year Sale">
+                                                                            </div>
+                                                                            <div class="promo-card-overlay">
+
+                                                                                <p class="promo-card-text">Khuyến mãi lớn cuối năm</p>
+                                                                                <a href="/brand/Steam" class="promo-card-btn"><i class="fa fa-arrow-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- Card 2 - Game Pass -->
+                                                                        <div class="promo-card" href="/brand/Xbox">
+                                                                            <div class="promo-card-image">
+                                                                                <img src="~/images/Xbox-game.jpg" alt="Game Pass">
+                                                                                </div>
+                                                                                <div class="promo-card-overlay">
+
+                                                                                    <p class="promo-card-text">Chơi game unlimited</p>
+                                                                                    <a href="/brand/Xbox" class="promo-card-btn"><i class="fa fa-arrow-right"></i></a>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <!-- Card 3 - Premium Collection -->
+                                                                            <div class="promo-card" href="/brand/Netflix">
+                                                                                <div class="promo-card-image">
+                                                                                    <img src="~/images/Netflix.png" alt="Premium">
+                                                                                    </div>
+                                                                                    <div class="promo-card-overlay">
+
+                                                                                        <p class="promo-card-text">Ưu đãi đặc biệt</p>
+                                                                                        <a href="/brand/Netflix" class="promo-card-btn"><i class="fa fa-arrow-right"></i></a>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <!-- Card 4 - Cloud Services -->
+                                                                                <div class="promo-card" href="/brand/Phần-Mềm-Bản-Quyền">
+                                                                                    <div class="promo-card-image">
+                                                                                        <img src="~/images/Phanmembanquyen.jpg" alt="Cloud Services">
+                                                                                        </div>
+                                                                                        <div class="promo-card-overlay">
+
+                                                                                            <p class="promo-card-text">Tài khoản bản quyền với nhiều lợi ích</p>
+                                                                                            <a href="/brand/Phần-Mềm-Bản-Quyền" class="promo-card-btn"><i class="fa fa-arrow-right"></i></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <!-- Navigation Arrows -->
+                                                                                <button class="carousel-nav carousel-nav-prev" onclick="scrollCarousel(-1)">
+                                                                                    <i class="fa fa-chevron-left"></i>
+                                                                                </button>
+                                                                                <button class="carousel-nav carousel-nav-next" onclick="scrollCarousel(1)">
+                                                                                    <i class="fa fa-chevron-right"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <!--/slider-->
+                                                                        }
+
+                                                                        <section>
+                                                                            <div class="container">
+                                                                                <div class="row">
+                                                                                    @Html.Partial("_NotificationPartial")
+                                                                                    @RenderBody()
+                                                                                </div>
+                                                                            </div>
+                                                                        </section>
+                                                                        @await Html.PartialAsync("_MobileNavPartial")
+                                                                        <!-- Footer -->
+                                                                        <footer id="footer">
+                                                                            <div class="footer-top">
+                                                                                <div class="footer-container">
+                                                                                    <div class="footer-grid">
+                                                                                        <!-- Company Info Section -->
+                                                                                        <div class="companyinfo">
+
+                                                                                            <h2><span>WIND</span>SHOP</h2>
+                                                                                            <p>Your trusted destination for quality products and exceptional service. We're committed to
+                                                                                                bringing you the best shopping experience with sustainable and eco-friendly options.</p>
+
+                                                                                                <div class="social-links">
+                                                                                                    <a href="#" title="Facebook" aria-label="Facebook">
+                                                                                                        <i class="fa fa-facebook"></i>
+                                                                                                    </a>
+                                                                                                    <a href="#" title="Twitter" aria-label="Twitter">
+                                                                                                        <i class="fa fa-twitter"></i>
+                                                                                                    </a>
+                                                                                                    <a href="#" title="Instagram" aria-label="Instagram">
+                                                                                                        <i class="fa fa-instagram"></i>
+                                                                                                    </a>
+                                                                                                    <a href="#" title="LinkedIn" aria-label="LinkedIn">
+                                                                                                        <i class="fa fa-linkedin"></i>
+                                                                                                    </a>
+                                                                                                    <a href="#" title="YouTube" aria-label="YouTube">
+                                                                                                        <i class="fa fa-youtube-play"></i>
+                                                                                                    </a>
+                                                                                                </div>
+
+                                                                                                <!-- Newsletter -->
+                                                                                                <div class="newsletter-section">
+                                                                                                    <h4>Subscribe to Newsletter</h4>
+                                                                                                    <form class="newsletter-form">
+                                                                                                        <input type="email" placeholder="Enter your email" required>
+                                                                                                        <button type="submit">Subscribe</button>
+                                                                                                    </form>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <!-- Product Gallery -->
+                                                                                            <div class="product-gallery">
+                                                                                                <div class="product-item">
+                                                                                                    <a href="#">
+                                                                                                        <div class="iframe-img">
+                                                                                                            <img src="/images/Resident-Evil-Requiem.webp" alt="Product 1">
+                                                                                                        </div>
+                                                                                                        <div class="product-info">
+                                                                                                            <p>WINDSHOP</p>
+                                                                                                            <h3>New Arrival</h3>
+                                                                                                        </div>
+                                                                                                    </a>
+                                                                                                </div>
+
+                                                                                                <div class="product-item">
+                                                                                                    <a href="#">
+                                                                                                        <div class="iframe-img">
+                                                                                                            <img src="/images/Black-Myth-Wukong.webp" alt="Product 2">
+                                                                                                        </div>
+                                                                                                        <div class="product-info">
+                                                                                                            <p>WINDSHOP</p>
+                                                                                                            <h3>Best Seller</h3>
+                                                                                                        </div>
+                                                                                                    </a>
+                                                                                                </div>
+
+                                                                                                <div class="product-item">
+                                                                                                    <a href="#">
+                                                                                                        <div class="iframe-img">
+                                                                                                            <img src="/images/elden-ring-shadow-of-the-erdtree.webp" alt="Product 3">
+                                                                                                        </div>
+                                                                                                        <div class="product-info">
+                                                                                                            <p>WINDSHOP</p>
+                                                                                                            <h3>Featured</h3>
+                                                                                                        </div>
+                                                                                                    </a>
+                                                                                                </div>
+
+                                                                                                <div class="product-item">
+                                                                                                    <a href="#">
+                                                                                                        <div class="iframe-img">
+                                                                                                            <img src="/images/Battlefield-6.webp" alt="Product 4">
+                                                                                                        </div>
+                                                                                                        <div class="product-info">
+                                                                                                            <p>WINDSHOP</p>
+                                                                                                            <h3>Trending</h3>
+                                                                                                        </div>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <!-- Contact Section -->
+                                                                                            <div class="contact-section">
+                                                                                                <h3>Get in Touch</h3>
+
+                                                                                                <div class="contact-item">
+                                                                                                    <i class="fa fa-map-marker"></i>
+                                                                                                    <div class="contact-details">
+                                                                                                        <h4>Address</h4>
+                                                                                                        <p>Trường đại học Kiến Trúc Hà Nội<br>57 P. Đại An, P. Văn Quán, Hà Đông, Hà Nội</p>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="contact-item">
+                                                                                                    <i class="fa fa-phone"></i>
+                                                                                                    <div class="contact-details">
+                                                                                                        <h4>Phone</h4>
+                                                                                                        <p>+84 0769541214<br>Mon-Fri: 9AM-6PM</p>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="contact-item">
+                                                                                                    <i class="fa fa-envelope"></i>
+                                                                                                    <div class="contact-details">
+                                                                                                        <h4>Email</h4>
+                                                                                                        <p>support@windshop.com<br>Lejohn2801@gmail.com</p>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="map-container">
+                                                                                                    <img src="https://images.unsplash.com/photo-1569163139394-de4798aa62b6?w=600&h=400&fit=crop"
+                                                                                                         alt="Location Map">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <!-- Footer Bottom -->
+                                                                                <div class="footer-bottom">
+                                                                                    <div class="footer-bottom-content">
+                                                                                        <p class="copyright">
+                                                                                            Copyright © 2025 WINDSHOP Inc. All rights reserved.
+                                                                                        </p>
+                                                                                        <div class="footer-links">
+                                                                                            <a href="#">Privacy Policy</a>
+                                                                                            <a href="#">Terms of Service</a>
+                                                                                            <a href="#">Cookie Policy</a>
+                                                                                            <a href="#">Sitemap</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </footer>
+
+                                                                            <script>
+                                                                                    // Newsletter form submission
+                                                                                    document.querySelector('.newsletter-form').addEventListener('submit', function (e) {
+                                                                                        e.preventDefault();
+                                                                                        const email = this.querySelector('input').value;
+                                                                                        alert('Thank you for subscribing with: ' + email);
+                                                                                        this.reset();
+                                                                                    });
+
+                                                                                    // Smooth scroll animation on load
+                                                                                    const observerOptions = {
+                                                                                        threshold: 0.1,
+                                                                                        rootMargin: '0px 0px -100px 0px'
+                                                                                    };
+
+                                                                                    const observer = new IntersectionObserver(function (entries) {
+                                                                                        entries.forEach(entry => {
+                                                                                            if (entry.isIntersecting) {
+                                                                                                entry.target.style.opacity = '1';
+                                                                                                entry.target.style.transform = 'translateY(0)';
+                                                                                            }
+                                                                                        });
+                                                                                    }, observerOptions);
+
+                                                                                    document.querySelectorAll('.product-item, .contact-item').forEach(el => {
+                                                                                        el.style.opacity = '0';
+                                                                                        el.style.transform = 'translateY(20px)';
+                                                                                        el.style.transition = 'all 0.6s ease';
+                                                                                        observer.observe(el);
+                                                                                    });
+                                                                            </script>
+
+                                                                            <script>
+                                                                                    // Script HEADER
+                                                                                    (function () {
+                                                                                        const header = document.getElementById('header');
+                                                                                        let ticking = false;
+
+                                                                                        function handleScroll() {
+                                                                                            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                                                                                            if (scrollTop > 50) {
+                                                                                                header.classList.add('scrolled');
+                                                                                            } else {
+                                                                                                header.classList.remove('scrolled');
+                                                                                            }
+
+                                                                                            ticking = false;
+                                                                                        }
+
+                                                                                        function requestTick() {
+                                                                                            if (!ticking) {
+                                                                                                window.requestAnimationFrame(handleScroll);
+                                                                                                ticking = true;
+                                                                                            }
+                                                                                        }
+
+                                                                                        window.addEventListener('scroll', requestTick, { passive: true });
+                                                                                        handleScroll();
+                                                                                    })();
+                                                                            </script>
+
+
+
+
+
+                                                                            @* SlideBar script *@
+                                                                            <script>
+                                                                                    const hamburgerBtn = document.getElementById('hamburgerBtn');
+                                                                                    const sidebar = document.getElementById('sidebar');
+                                                                                    const sidebarOverlay = document.getElementById('sidebarOverlay');
+                                                                                    const closeBtn = document.getElementById('closeBtn');
+
+                                                                                    // Open sidebar
+                                                                                    function openSidebar() {
+                                                                                        sidebar.classList.add('active');
+                                                                                        sidebarOverlay.classList.add('active');
+                                                                                        hamburgerBtn.setAttribute('aria-expanded', 'true');
+                                                                                        document.body.style.overflow = 'hidden';
+                                                                                    }
+
+                                                                                    // Close sidebar
+                                                                                    function closeSidebar() {
+                                                                                        sidebar.classList.remove('active');
+                                                                                        sidebarOverlay.classList.remove('active');
+                                                                                        hamburgerBtn.setAttribute('aria-expanded', 'false');
+                                                                                        document.body.style.overflow = '';
+                                                                                    }
+
+                                                                                    // Event listeners
+                                                                                    hamburgerBtn.addEventListener('click', openSidebar);
+                                                                                    closeBtn.addEventListener('click', closeSidebar);
+                                                                                    sidebarOverlay.addEventListener('click', closeSidebar);
+
+                                                                                    // Dropdown toggle
+                                                                                    document.querySelectorAll('.has-dropdown > a').forEach(item => {
+                                                                                        item.addEventListener('click', function (e) {
+                                                                                            e.preventDefault();
+                                                                                            const parent = this.parentElement;
+
+                                                                                            // Close other dropdowns
+                                                                                            document.querySelectorAll('.has-dropdown').forEach(other => {
+                                                                                                if (other !== parent) {
+                                                                                                    other.classList.remove('open');
+                                                                                                }
+                                                                                            });
+
+                                                                                            // Toggle current dropdown
+                                                                                            parent.classList.toggle('open');
+                                                                                        });
+                                                                                    });
+
+                                                                                    // Close sidebar on ESC key
+                                                                                    document.addEventListener('keydown', function (e) {
+                                                                                        if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                                                                                            closeSidebar();
+                                                                                        }
+                                                                                    });
+
+                                                                                    // Prevent body scroll when sidebar is open
+                                                                                    sidebar.addEventListener('touchmove', function (e) {
+                                                                                        if (sidebar.scrollHeight > sidebar.clientHeight) {
+                                                                                            e.stopPropagation();
+                                                                                        }
+                                                                                    }, { passive: false });
+                                                                            </script>
+
+
+
+
+                                                                            @* Slide Script *@
+                                                                            <script>
+                                                                                    (function () {
+                                                                                        const slides = document.querySelectorAll('.slide');
+                                                                                        const dots = document.querySelectorAll('.nav-dot');
+                                                                                        const prevBtn = document.querySelector('.slider-arrow.prev');
+                                                                                        const nextBtn = document.querySelector('.slider-arrow.next');
+                                                                                        let currentSlide = 0;
+                                                                                        let autoSlideInterval;
+
+                                                                                        function showSlide(n) {
+                                                                                            slides.forEach(slide => slide.classList.remove('active'));
+                                                                                            dots.forEach(dot => dot.classList.remove('active'));
+
+                                                                                            currentSlide = (n + slides.length) % slides.length;
+
+                                                                                            slides[currentSlide].classList.add('active');
+                                                                                            dots[currentSlide].classList.add('active');
+                                                                                        }
+
+                                                                                        function nextSlide() {
+                                                                                            showSlide(currentSlide + 1);
+                                                                                        }
+
+                                                                                        function prevSlide() {
+                                                                                            showSlide(currentSlide - 1);
+                                                                                        }
+
+                                                                                        function startAutoSlide() {
+                                                                                            autoSlideInterval = setInterval(nextSlide, 4000);
+                                                                                        }
+
+                                                                                        function stopAutoSlide() {
+                                                                                            clearInterval(autoSlideInterval);
+                                                                                        }
+
+                                                                                        // Navigation buttons
+                                                                                        if (nextBtn && prevBtn) {
+                                                                                            nextBtn.addEventListener('click', () => {
+                                                                                                nextSlide();
+                                                                                                stopAutoSlide();
+                                                                                                startAutoSlide();
+                                                                                            });
+
+                                                                                            prevBtn.addEventListener('click', () => {
+                                                                                                prevSlide();
+                                                                                                stopAutoSlide();
+                                                                                                startAutoSlide();
+                                                                                            });
+                                                                                        }
+
+                                                                                        // Dots navigation
+                                                                                        dots.forEach(dot => {
+                                                                                            dot.addEventListener('click', (e) => {
+                                                                                                const slideNum = parseInt(e.target.dataset.slide);
+                                                                                                showSlide(slideNum);
+                                                                                                stopAutoSlide();
+                                                                                                startAutoSlide();
+                                                                                            });
+                                                                                        });
+
+                                                                                        // Auto slide
+                                                                                        startAutoSlide();
+
+                                                                                        // Pause on hover
+                                                                                        const sliderWrapper = document.querySelector('.slider-wrapper');
+                                                                                        if (sliderWrapper) {
+                                                                                            sliderWrapper.addEventListener('mouseenter', stopAutoSlide);
+                                                                                            sliderWrapper.addEventListener('mouseleave', startAutoSlide);
+                                                                                        }
+                                                                                    })();
+                                                                            </script>
+
+
+                                                                            <script src="~/js/jquery.js"></script>
+                                                                            <script src="~/js/bootstrap.min.js"></script>
+                                                                            <script src="~/js/jquery.scrollUp.min.js"></script>
+                                                                            <script src="~/js/price-range.js"></script>
+                                                                            <script src="~/js/jquery.prettyPhoto.js"></script>
+                                                                            <script src="~/js/main.js"></script>
+                                                                            <script src="~/js/site.js"></script>
+                                                                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
+                                                                            <script src="~/js/promo-slider.js"></script>
+                                                                            <script>
+                                                                                $(function () {
+                                                                                var message = '@TempData["success"]';
+                                                                                if (message != '')
+                                                                                Swal.fire(message);
+
+                                                                                });
+                                                                            </script>
+                                                                            <script>
+                                                                                document.addEventListener("DOMContentLoaded", function() {
+                                                                                    const navItems = document.querySelectorAll('.mobile-nav .nav-item');
+                                                                                    const currentPath = window.location.pathname;
+                                                                            
+                                                                                    navItems.forEach(item => {
+                                                                                        const itemPath = item.getAttribute('href');
+                                                                                        if (currentPath === itemPath) {
+                                                                                            item.classList.add('active');
+                                                                                        }
+                                                                                    });
+                                                                                });
+                                                                            </script>
+                                                                                                                                                        <div id="mobile-filter-overlay" class="mobile-filter-overlay"></div>
+                                                                                                                                                        @await Html.PartialAsync("_MobileFilter")
+                                                                                                                                                        <script>
+                                                                                document.addEventListener("DOMContentLoaded", function() {
+                                                                                    const filterPanel = document.getElementById('mobile-filter-panel');
+                                                                                    const filterOverlay = document.getElementById('mobile-filter-overlay');
+                                                                                    const openBtn = document.getElementById('open-filter-panel');
+                                                                                    const closeBtn = document.getElementById('close-filter-panel');
+
+                                                                                    if (filterPanel && filterOverlay && openBtn && closeBtn) {
+                                                                                        openBtn.addEventListener('click', function () {
+                                                                                            filterPanel.classList.add('active');
+                                                                                            filterOverlay.classList.add('active');
+                                                                                        });
+
+                                                                                        closeBtn.addEventListener('click', function () {
+                                                                                            filterPanel.classList.remove('active');
+                                                                                            filterOverlay.classList.remove('active');
+                                                                                        });
+
+                                                                                        filterOverlay.addEventListener('click', function () {
+                                                                                            filterPanel.classList.remove('active');
+                                                                                            filterOverlay.classList.remove('active');
+                                                                                        });
+                                                                                    }
+                                                                                });
+                                                                            </script>
+                                                                            @await RenderSectionAsync("Scripts", required: false)
+                                                                        </body>
+
+                                                                    </html>

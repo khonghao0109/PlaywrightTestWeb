@@ -1,0 +1,228 @@
+@using MyWebApp.Models.ViewModels
+@model CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["error"]
+    </div>
+}
+
+<div class="cart-container">
+
+    @if (TempData["info"] != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @TempData["info"]
+        </div>
+    }
+    <div class="cart-header">
+        <h1>Giỏ hàng của bạn</h1>
+    </div>
+
+    @if (Model.CartItems.Count > 0)
+    {
+        <div class="cart-main-layout">
+            <!-- Cart Items List -->
+            <div class="cart-items-list">
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="cart-item" id="row-@item.ProductId">
+                        <div class="cart-item-image">
+                            <img src="~/media/products/@item.Image" alt="@item.ProductName">    
+                            </div>
+                            <div class="cart-item-details">
+                                <div class="cart-item-info">
+                                    <h4 style="font-size: 1.8rem;font-weight: 500;">
+                                        <a asp-controller="Product" asp-action="Detail"
+                                           asp-route-id="@item.ProductId" style="color: black;">
+                                            @item.ProductName
+                                        </a>
+
+                                    </h4>
+                                    <span class="cart-price">@item.Price.ToString("#,##0") ₫</span>
+                                </div>
+                                <div class="cart-item-actions">
+                                    <div class="quantity-control">
+                                        <button type="button" class="decrease-btn" data-id="@item.ProductId">-</button>
+                                        <input id="qty-@item.ProductId" type="text" value="@item.Quantity" readonly
+                                               class="quantity-input">
+                                        <button type="button" class="increase-btn" data-id="@item.ProductId">+</button>
+                                    </div>
+                                    <button type="button" class="remove-btn" data-id="@item.ProductId">Xóa</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h3>Tổng quan đơn hàng</h3>
+                    <div class="summary-row">
+                        <span>Tạm tính</span>
+                        <span id="subTotal">@Model.GrandTotal.ToString("#,##0") ₫</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí vận chuyển</span>
+                        <span>Miễn phí</span>
+                    </div>
+                    <div class="summary-row grand-total">
+                        <span>Tổng cộng</span>
+                        <span id="grandTotal">@Model.GrandTotal.ToString("#,##0") ₫</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="checkout-form" id="checkout-form-section">
+                <h2>Thông tin giao hàng</h2>
+                <form asp-controller="Checkout" asp-action="Checkout" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="shopper-informations">
+                        <div class="row">
+                            <div class="col-sm-6 clearfix">
+                                <div class="bill-to">
+                                    <p>Chi tiết hóa đơn</p>
+                                    <div class="form-one">
+                                        <div class="form-group">
+                                            <input asp-for="Address.Email" class="form-control" placeholder="Email *"
+                                                   required />
+                                            <span asp-validation-for="Address.Email" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="Address.FullName" class="form-control" placeholder="Họ và tên *"
+                                                   required />
+                                            <span asp-validation-for="Address.FullName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="Address.Phone" class="form-control" placeholder="Số điện thoại *"
+                                                   required />
+                                            <span asp-validation-for="Address.Phone" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-two">
+                                        <div class="form-group">
+                                            <input asp-for="Address.ZipCode" class="form-control" placeholder="Mã bưu điện" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="Address.Country" class="form-control" placeholder="Quốc gia" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="Address.State" class="form-control" placeholder="Tỉnh/Thành phố" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="order-message">
+                                    <p>Ghi chú đơn hàng</p>
+                                    <textarea asp-for="Address.Note" class="form-control"
+                                              placeholder="Ghi chú về đơn hàng của bạn, ví dụ: thời gian hoặc chỉ dẫn địa điểm giao hàng chi tiết."
+                                              rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right" style="margin-top:15px;">
+                        <button type="submit" class="btn btn-primary">Thanh toán</button>
+                    </div>
+                </form>
+            </div>
+
+
+        }
+    else
+        {
+            <div class="cart-empty-message">
+                <h4>Giỏ hàng của bạn đang trống.</h4>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Tiếp tục mua sắm</a>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+                $(function () {
+                    // Function to format numbers as Vietnamese currency
+                    function formatCurrency(value) {
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+                    }
+
+                    // Anti-forgery token
+                    var token = $('input[name="__RequestVerificationToken"]').val();
+
+                    function call(url, data, callback) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: data,
+                            headers: { "RequestVerificationToken": token },
+                            success: function (res) {
+                                if (res.success) {
+                                    callback(res);
+                                }
+                            },
+                            error: function (err) {
+                                console.error("AJAX call failed:", err);
+                            }
+                        });
+                    }
+
+                    // INCREASE quantity
+                    $(".increase-btn").click(function () {
+                        var id = $(this).data("id");
+                        call("/Cart/Increase", { Id: id }, function (res) {
+                            $("#qty-" + id).val(res.quantity);
+                            $("#itemTotal-" + id).text(formatCurrency(res.itemTotal));
+                            $("#subTotal").text(formatCurrency(res.grandTotal));
+                            $("#grandTotal").text(formatCurrency(res.grandTotal));
+                        });
+                    });
+
+                    // DECREASE quantity
+                    $(".decrease-btn").click(function () {
+                        var id = $(this).data("id");
+                        call("/Cart/Decrease", { Id: id }, function (res) {
+                            if (res.removed === true) {
+                                $("#row-" + id).remove();
+                                if ($('.cart-item').length === 0) {
+                                    location.reload(); // Reload to show empty cart message
+                                }
+                            } else {
+                                $("#qty-" + id).val(res.quantity);
+                                $("#itemTotal-" + id).text(formatCurrency(res.itemTotal));
+                            }
+                            $("#subTotal").text(formatCurrency(res.grandTotal));
+                            $("#grandTotal").text(formatCurrency(res.grandTotal));
+                        });
+                    });
+
+                    // REMOVE item
+                    $(".remove-btn").click(function () {
+                        var id = $(this).data("id");
+                        if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
+                            call("/Cart/Remove", { Id: id }, function (res) {
+                                $("#row-" + id).remove();
+                                $("#subTotal").text(formatCurrency(res.grandTotal));
+                                $("#grandTotal").text(formatCurrency(res.grandTotal));
+
+                                if ($('.cart-item').length === 0) {
+                                    location.reload(); // Reload to show empty cart message
+                                }
+                            });
+                        }
+                    });
+                });
+    </script>
+}

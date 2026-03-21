@@ -1,0 +1,183 @@
+﻿@model ProductModel
+
+@{
+    ViewData["Title"] = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container product-detail-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="breadcrumb-section">
+                <a asp-action="Index" asp-controller="Home">Home</a>
+                <span class="breadcrumb-separator">/</span>
+                <a asp-action="Index" asp-controller="Category"
+                   asp-route-slug="@Model.Category.Slug">@Model.Category.Name</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">@Model.Name</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-main-panel">
+        <div class="row">
+
+            <!-- Left: Product Image Gallery -->
+            <div class="col-md-7">
+
+                <div class="product-image-gallery">
+                    <div class="main-image">
+                        <img src="~/media/products/@Model.Image" alt="@Model.Name" />
+                    </div>
+                    <!-- Thumbnails can be added here if needed -->
+                </div>
+            </div>
+
+            <!-- Right: Product Info & Purchase -->
+            <div class="col-md-5">
+                <div class="product-info-panel">
+                    <h1>@Model.Name</h1>
+
+                    <div class="price-section">
+                        <div class="price-label">Giá bán:</div>
+                        <div class="old-price">@Model.RealPrice.ToString("#,##0") ₫</div>
+                        <div class="current-price">@Model.Price.ToString("#,##0") ₫</div>
+                    </div>
+
+
+                    <form id="add-to-cart-form">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <div class="quantity-section">
+                            <label for="quantityInput">Số lượng:</label>
+                            <div class="quantity-input-group">
+                                <button type="button" onclick="updateQty(-1)">-</button>
+                                <input id="quantityInput" name="quantity" value="1" min="1" />
+                                <button type="button" onclick="updateQty(1)">+</button>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button type="button" id="add-to-cart-button" class="btn btn-add-to-cart">
+                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                            </button>
+                            <a id="buy-now-button" class="btn btn-buy-now">
+                                <i class="fa fa-dollar"></i> Mua ngay
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Description, Reviews Tabs -->
+    <div class="product-description-tabs">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#description" data-toggle="tab">Mô tả sản phẩm</a></li>
+            <li><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="description">
+                <div id="description-content"></div>
+            </div>
+            <div class="tab-pane fade" id="reviews">
+                <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                <!-- Review submission form can go here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    @{
+        var relatedProducts = ViewBag.RelatedProducts as IEnumerable<ProductModel>;
+    }
+    @if (relatedProducts != null && relatedProducts.Any())
+    {
+        <div class="related-products-section">
+            <div class="text-center">
+                <h2 class="section-title">Sản phẩm liên quan</h2>
+            </div>
+            <div class="row">
+                @foreach (var relatedProduct in relatedProducts)
+                {
+                    <div class="col-xs-6 col-md-4 col-lg-3 product-card-wrapper">
+                        <div class="product-card">
+                            <a asp-action="Detail" asp-controller="Product" asp-route-Id="@relatedProduct.Id"
+                                   class="product-link">
+                                <div class="product-image-wrapper-new">
+                                    <img src="~/media/products/@relatedProduct.Image" alt="@relatedProduct.Name"
+                                         class="product-main-image" />
+                                </div>
+
+                                <div class="product-details-new">
+                                    <div class="product-category-badge-new">@relatedProduct.Category.Name</div>
+                                    <h3 class="product-name-new">@relatedProduct.Name</h3>
+                                    <div class="product-price-section">
+                                        <span class="product-price-old">@relatedProduct.RealPrice.ToString("#,##0") ₫</span>
+                                        <span class="product-price-new">@relatedProduct.Price.ToString("#,##0") ₫</span>
+                                    </div>
+                                    <button type="button" class="btn-add-to-cart-circle ajax-add-to-cart"
+                                            data-id="@relatedProduct.Id">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+                $(document).ready(function () {
+                    // 1. Lấy nội dung HTML từ Model và chuyển thành chuỗi JSON an toàn
+                    var rawDescription = @Json.Serialize(Model.Description);
+
+                    // 2. Đổ nội dung vào thẻ div
+                    // Trình duyệt sẽ tự động xử lý các thẻ đóng </div> thừa tại bước này
+                    // để nó không phá vỡ cấu trúc trang web chính.
+                    document.getElementById("description-content").innerHTML = rawDescription;
+
+                    
+                    $('#description-content table').addClass('table table-bordered table-striped');
+                    $('#description-content table').css({
+                        'width': '100%',
+                        'max-width': '100%'
+                    });
+                    $('#description-content img').css({
+                        'max-width': '100%',
+                        'height': 'auto'
+                    });
+                });
+                function updateQty(change) {
+                    const input = document.getElementById('quantityInput');
+                    let currentValue = parseInt(input.value);
+                    let newValue = currentValue + change;
+
+                    if (newValue < 1) {
+                        newValue = 1;
+                    }
+                    input.value = newValue;
+                }
+
+                document.getElementById('quantityInput').addEventListener('input', function (e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    if (parseInt(this.value) < 1 || this.value === '') {
+                        this.value = '1';
+                    }
+                });
+
+                $('#buy-now-button').on('click', function (e) {
+                    e.preventDefault();
+                    const form = $('#add-to-cart-form');
+                    const productId = form.find('input[name="Id"]').val();
+                    const quantity = form.find('input[name="quantity"]').val();
+                    window.location.href = `/Cart/BuyNow?Id=${productId}&quantity=${quantity}`;
+                });
+    </script>
+}

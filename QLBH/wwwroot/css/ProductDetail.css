@@ -1,0 +1,325 @@
+body {
+    background-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+
+.product-detail-container {
+    padding: 60px 15px;
+    background: linear-gradient(90deg, #000000 0%, #E7D1BE 100%);
+}
+
+
+.breadcrumb-section {
+    background-color: #2c2c2c;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.breadcrumb-section a {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+.breadcrumb-section .breadcrumb-separator {
+    margin: 0 10px;
+}
+
+.breadcrumb-section .breadcrumb-current {
+    color: #f0b90b;
+}
+
+.product-main-panel {
+    
+    padding: 0px;
+    border-radius: 5px;
+}
+
+/* Left Column: Image */
+.product-image-gallery .main-image img {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #444;
+}
+
+/* Right Column: Info & Purchase */
+.product-info-panel h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.price-section {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.price-section .price-label {
+    font-size: 1rem;
+    color: #aaa;
+}
+
+.price-section .current-price {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #f0b90b;
+    margin-bottom: 5px;
+}
+
+.product-short-description {
+    font-size: 1.9rem;
+    color: #ffffff;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 3px solid #f0b90b;
+}
+
+.quantity-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.quantity-section label {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.quantity-input-group {
+    display: flex;
+}
+
+.quantity-input-group button {
+    background-color: #444;
+    border: 1px solid #555;
+    color: #f1f1f1;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.quantity-input-group input {
+    width: 50px;
+    text-align: center;
+    background-color: #2c2c2c;
+    border: 1px solid #555;
+    border-left: none;
+    border-right: none;
+    color: #f1f1f1;
+    font-weight: 600;
+}
+
+.action-buttons .btn {
+    width: 38%;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.btn-buy-now {
+    background-color: #f0b90b;
+    color: #1a1a1a;
+}
+
+.btn-buy-now:hover {
+    background-color: #ffce3a;
+    color: #1a1a1a;
+}
+
+.btn-add-to-cart {
+    background-color: #fff;
+    border: 2px solid #f0b90b;
+    color: #f0b90b;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #f0b90b;
+    color: #1a1a1a;
+}
+
+/* Tabs Section */
+.product-description-tabs {
+    margin-top: 40px;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.product-description-tabs .nav-tabs {
+    border-bottom: 2px solid #444;
+}
+
+.product-description-tabs .nav-tabs > li > a {
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-right: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+.product-description-tabs .nav-tabs > li.active > a,
+.product-description-tabs .nav-tabs > li:hover > a {
+    color: #f0b90b;
+    border-bottom: 2px solid #f0b90b;
+    background-color: transparent;
+}
+
+.product-description-tabs .tab-content {
+    padding-top: 20px;
+    color: #ccc;
+}
+
+/* Related Products */
+.related-products-section {
+    margin-top: 20px;
+}
+
+.section-title {
+    color: #2c2c2c;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #f0b90b;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.product-card {
+    background-color: #2c2c2c;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: #f1f1f1;
+    display: block;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.product-card-wrapper .product-link {
+    text-decoration: none;
+}
+
+.product-image-wrapper-new {
+    width: 100%;
+    height: 200px; /* Hoặc 260px tùy bạn muốn ảnh to hay nhỏ */
+    overflow: hidden;
+}
+
+.product-image-wrapper-new img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Quan trọng: giúp ảnh tự cắt cho vừa khung mà không bị méo */
+    object-position: center;
+}
+
+.product-details-new {
+    padding: 15px;
+    display: flex;            /* Thêm flex */
+    flex-direction: column;   /* Xếp dọc */
+    flex-grow: 1;
+}
+
+.product-category-badge-new {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.product-name-new {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #f1f1f1;
+    height: 44px; /* Approx 2 lines */
+    overflow: hidden;
+}
+
+.product-price-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.product-price-new {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f0b90b;
+}
+
+.btn-add-to-cart-circle {
+    background-color: #444;
+    color: #f0b90b;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add-to-cart-circle:hover {
+    background-color: #f0b90b;
+    color: #1a1a1a;
+}
+.old-price {
+    color: white;
+    text-decoration: line-through;
+}
+/* Responsive */
+@media (max-width: 767px) {
+    .product-main-panel {
+        padding: 15px;
+    }
+    .product-info-panel {
+        margin-top: 30px;
+    }
+    .product-info-panel h1 {
+        font-size: 1.6rem;
+        color: white
+    }
+    .price-section .current-price {
+        font-size: 1.8rem;
+    }
+    .action-buttons .btn {
+        padding: 10px;
+        font-size: 1rem;
+    }
+}
+.description-content-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Quan trọng: Hiện thanh trượt nếu nội dung quá rộng */
+    display: block;
+}
+
+/* Ép tất cả các bảng trong mô tả về chiều rộng tối đa 100% */
+.description-content-wrapper table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse;
+}
+
+/* Đảm bảo ảnh trong mô tả không bị tràn */
+.description-content-wrapper img {
+    max-width: 100% !important;
+    height: auto !important;
+}

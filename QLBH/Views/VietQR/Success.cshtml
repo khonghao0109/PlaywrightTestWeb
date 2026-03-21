@@ -1,0 +1,61 @@
+@model string
+@{
+    ViewData["Title"] = "Thanh toán thành công";
+}
+
+<style>
+    .text-center {
+        margin-top: 100px;
+    }
+
+    .wrapper-relative {
+        position: relative;
+        min-height: 125vh;
+        /* Chiều cao tối thiểu = 100% màn hình */
+        background: #f0f2f5;
+    }
+
+    .box-absolute-center {
+        position: absolute;
+        /* Đặt vị trí chính giữa màn hình */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* Trang trí box */
+        background: #fff;
+        border-radius: 8px;
+        padding: 30px;
+        max-width: 500px;
+        padding-bottom: 200px;
+        width: 90%;
+        /* Cho nhỏ lại trên màn hình di động */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon-container {
+        font-size: 50px;
+        color: #28a745;
+        margin-bottom: 20px;
+        margin-top: 50px;
+    }
+
+    .status {
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .status.success {
+        color: #28a745;
+    }
+</style>
+
+<div class="text-center">
+    <div class="icon-container">
+        <img src="/images/success.png" width="150" height="150" />
+    </div>
+    <p class="status success">Thanh toán thành công</p>
+    <p>Chúng tôi đã gửi thư xác nhận thanh toán tại địa chỉ: @Model</p>
+    <p>Vui lòng kiểm tra hộp thư đến hoặc thư mục spam của bạn.</p>
+</div>

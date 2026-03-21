@@ -1,0 +1,121 @@
+﻿@model IEnumerable<OrderDetails>
+
+@{
+    ViewData["Title"] = "Order Details";
+	decimal total = 0;
+	decimal subtotal = 0;
+}
+
+<!DOCTYPE html>
+    
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+	<title>Order Details</title>
+</head>
+
+<body>
+	<h3>Order Details</h3>
+    <table class="table" id="detail_order">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Order Code</th>
+            <th>UserName</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+         
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+				subtotal = item.Price * item.Quantity;
+				total += subtotal;
+            <tr>
+                <input type="hidden" asp-for="@item.OrderCode" class="getId" />
+                <td>@item.Id</td>
+                <th>@item.OrderCode</th>
+                <td>@item.UserName</td>
+                <td>@item.Product.Name</td>
+                 <td>$@item.Price</td>
+                <td>@item.Quantity</td>
+                    <td>$@subtotal</td>
+                
+            </tr>
+
+        }
+        <tr>
+                <td>Total:</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td>$@total</td>
+                <td>
+                    @if (@ViewBag.Status != 3)
+                    {
+                        <select class="form-control select-update-order">
+
+                            <option value="1">Chưa thanh toán</option>
+                            <option value="0">Đang xử lý</option>
+                            <option value="2">Đã thanh toán</option>
+
+
+                        </select>
+                    }
+
+                </td>
+        </tr>
+    </tbody>
+	</table>
+</body>
+
+</html> 
+
+@section Scripts{
+    <script>
+        new DataTable('#detail_order', {
+            layout: {
+                topStart: {
+                    buttons: ['pdf','print']
+                }
+            }
+        });
+
+    </script>
+         <script>
+        $(document).ready(function () {
+            $('.select-update-order').change(function () {
+                var status = $(this).val(); //status = 1
+                var ordercode = $('.getId').val(); //
+                // alert(status);
+                // alert(ordercode);
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UpdateOrder")",
+                    data: { status: status, ordercode: ordercode }, // Send data to the server
+
+                    success: function (result) {
+                        // Handle successful update
+                        if (result.success) {
+
+                            Swal.fire("Cập nhật đơn hàng thành công.");
+                        } else {
+
+                            Swal.fire("Cập nhật đơn hàng thất bại." + result.message);
+
+                        }
+                    }
+
+                });
+            });
+        });
+    </script>		
+}

@@ -1,0 +1,39 @@
+
+    .account-history-page {
+        margin-top: 60px;
+    }
+
+    .order-card {
+        margin-bottom: 2rem;
+        border: 1px solid #e3e3e3;
+        border-radius: 0.25rem;
+    }
+
+    .order-card-header {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-bottom: 1px solid #e3e3e3;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .order-card-header h5 {
+        margin-bottom: 0;
+    }
+
+    .status-badge {
+        font-size: 0.9rem;
+        padding: 0.5em 0.7em;
+    }
+
+    .product-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid #e3e3e3;
+    }

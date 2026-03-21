@@ -1,0 +1,143 @@
+﻿@model UserModel
+@{
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/css/Account.css" rel="stylesheet">
+    ViewData["title"] = "Register";
+}
+
+
+
+<section class="signup-section">
+    <div class="signup-container">
+        <!-- Tabs -->
+        <div class="signup-tabs">
+            <button class="tab-button" onclick="window.location.href='@Url.Action("Login", "Account")'">
+                <i class="fa fa-sign-in"></i> Login
+            </button>
+            <button class="tab-button active">
+                <i class="fa fa-user-plus"></i> Sign Up
+            </button>
+        </div>
+
+        @if (ViewData.ModelState.ErrorCount > 0)
+        {
+            <div class="validation-summary" asp-validation-summary="ModelOnly"></div>
+        }
+
+        <!-- Sign Up Form -->
+        <form asp-action="Create" asp-controller="Account" method="post">
+            <div class="form-group">
+                <label class="form-label">Email address</label>
+                <div class="form-control-wrapper">
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email address" type="email" />
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <div class="form-control-wrapper">
+                    <input asp-for="Username" class="form-control" placeholder="Choose a username" />
+                </div>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="form-control-wrapper">
+                    <input asp-for="Password" class="form-control" type="password" id="passwordInput"
+                        placeholder="Create a password" />
+                    <button type="button" class="password-toggle"
+                        onclick="togglePassword('passwordInput', 'toggleIcon')">
+                        <i class="fa fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="password" id="confirmPasswordInput"
+                        placeholder="Confirm your password" />
+                    <button type="button" class="password-toggle"
+                        onclick="togglePassword('confirmPasswordInput', 'toggleIconConfirm')">
+                        <i class="fa fa-eye" id="toggleIconConfirm"></i>
+                    </button>
+                </div>
+                <span id="passwordMatchError" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn-signup" onclick="return validatePasswordMatch()">
+                Create Account
+            </button>
+
+            <p class="terms-text">
+                By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </p>
+        </form>
+
+        <div class="divider">
+            <span>OR</span>
+        </div>
+
+        <!-- Social Sign Up -->
+        <div class="social-login">
+            <button class="social-btn google">
+                <i class="fa-brands fa-google-plus-g"></i>
+                Continue with Google
+            </button>
+            <button class="social-btn apple">
+                <i class="fa-brands fa-apple"></i>
+                Continue with Apple
+            </button>
+
+            <button class="social-btn wallet">
+                <i class="fa-solid fa-wallet"></i>
+                Continue with Wallet
+            </button>
+        </div>
+
+        <div class="login-prompt">
+            Already have an account? <a asp-action="Login" asp-controller="Account">Log in</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    function togglePassword(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.getElementById(iconId);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+
+    function validatePasswordMatch() {
+        const password = document.getElementById('passwordInput').value;
+        const confirmPassword = document.getElementById('confirmPasswordInput').value;
+        const errorSpan = document.getElementById('passwordMatchError');
+
+        if (password !== confirmPassword) {
+            errorSpan.textContent = 'Mật khẩu và xác nhận mật khẩu không trùng khớp';
+            return false;
+        } else {
+            errorSpan.textContent = '';
+            return true;
+        }
+    }
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

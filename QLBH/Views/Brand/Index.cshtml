@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ProductModel>
+@{
+    var brandName = Model.FirstOrDefault()?.Brand.Name;
+    ViewData["Title"] = brandName;
+}
+<div class="row">
+    <div class="row_1" style="margin-top: 50px;">
+
+        <div class="col-sm-3 sidebar-container">
+            @Html.Partial("_SidebarPartial")
+        </div>
+        <div class="col-sm-9 padding-right product-content">
+            <div class="features_items"><!--features_items-->
+                <h2 class="title text-center">SẢN PHẨM THƯƠNG HIỆU @brandName?.ToUpper()</h2>
+                <div class="products-grid-container">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-xs-6 col-md-4 col-lg-3 product-card-wrapper">
+                            <div class="product-card">
+                                <a asp-action="Detail" asp-controller="Product" asp-route-Id="@item.Id"
+                                    class="product-link">
+                                    <!-- Product Image -->
+                                    <div class="product-image-wrapper-new">
+                                        <img src="~/media/products/@item.Image" alt="@item.Name"
+                                            class="product-main-image" />
+                                    </div>
+
+                                    <!-- Product Info -->
+                                    <div class="product-details-new">
+                                        <!-- Category Badge -->
+                                        <div class="product-category-badge-new">@item.Category.Name</div>
+
+                                        <!-- Product Title -->
+                                        <h3 class="product-name-new">@item.Name</h3>
+
+                                        <!-- Price Section -->
+                                        <div class="product-price-section">
+                                            <span class="product-price-old">@item.RealPrice.ToString("#,##0") ₫</span>
+                                            <span class="product-price-new">@item.Price.ToString("#,##0") ₫</span>
+                                        </div>
+
+                                        <!-- Add to Cart Button -->
+                                        <button type="button" class="btn-add-to-cart-circle ajax-add-to-cart"
+                                            data-id="@item.Id">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div><!--features_items-->
+
+        </div>
+    </div>
+</div>

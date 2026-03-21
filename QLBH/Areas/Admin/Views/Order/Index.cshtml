@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h3>List Order</h3>
+
+
+
+    <table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Order Code</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Order Address</th>
+            <th scope="col">Order Status</th>
+            <th scope="col">Action</th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <th scope="row">@item.OrderCode</th>
+                <td>@item.UserName</td>          
+                <td>@item.CreatedDate</td>
+                <td>
+                        @foreach (var addr in item.OrderAddresses)
+
+                        {
+                            <div>@addr.Address1 </div>
+                        }
+                </td>
+                <td>
+                        @if (item.Status == 1)
+                        {
+                            <span class="text text-success">Chưa thanh toán</span>
+
+                        }
+                        else if (item.Status == 0)
+                        {
+                            <span class="text text-primary">Đang xử lý</span>
+                        }
+                        else if (item.Status == 2)
+                        {
+                            <span class="text text-primary">Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span class="text text-danger">Đã hủy</span>
+                        }
+                </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" asp-action="ViewOrder" asp-controller="Order" asp-route-ordercode="@item.OrderCode">View Order</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-controller="Order" asp-route-ordercode="@item.OrderCode">Delete</a>
+                       
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿body {
+    font-family: 'Times New Roman', serif;
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    margin-top: 4px;
+    margin-right: 400px;
+    flex: 1; /* Chiếm không gian còn lại để căn giữa */
+    text-align: center; /* Căn giữa nội dung */
+    transition: transform 0.5s ease;
+}
+
+    .logo a {
+        font-size: 30px; /* Tăng kích thước chữ */
+        font-weight: 300; /* Đậm chữ */
+        text-decoration: none; /* Bỏ gạch chân */
+        color: #000; /* Màu chữ */
+    }
+
+nav {
+    flex: 1; /* Chiếm không gian còn lại */
+}
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end; /* Căn phải cho menu */
+        gap: 20px;
+    }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+        }
+
+.search-cart {
+    display: flex;
+    align-items: center;
+}
+
+    .search-cart input {
+        padding: 5px;
+        margin-right: 10px;
+    }
+
+    .search-cart a {
+        text-decoration: none;
+        color: #000;
+    }
+
+
+
+    /* Hiệu ứng phóng to */
+    /*Chỉ zoom ở trang chủ*/
+    body.home-page .logo.zoom {
+        transform: scale(4) translateY( 120px ); /*    Tăng kích thước phóng to và dịch chuyển xuống 70px */
+        transform-origin: center; /*    Đặt điểm gốc phóng to ở giữa*/
+    }
+
+    header#header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: #fff;
+        transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+        header#header.scrolled {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 0px;
+        }
+
+            header#header.scrolled .logo a {
+                font-size: 20px;
+                letter-spacing: 0.2em;
+            }
+
