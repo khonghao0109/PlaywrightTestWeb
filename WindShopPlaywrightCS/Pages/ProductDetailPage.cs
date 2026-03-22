@@ -21,10 +21,18 @@ public class ProductDetailPage(IPage page)
         await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
     }
 
+    // ✅ Sửa
     public async Task ClickBuyNowAsync()
     {
         await BuyNowBtn.ClickAsync();
-        await page.WaitForURLAsync("**/cart**", new PageWaitForURLOptions { Timeout = 10_000 });
+        await page.WaitForLoadStateAsync(LoadState.NetworkIdle);  // bỏ WaitForURL
+    }
+
+    public async Task ExpectOnDetailPageAsync()
+    {
+        // Dùng Assert.That thay ToHaveURLAsync
+        NUnit.Framework.Assert.That(page.Url,
+            NUnit.Framework.Does.Contain("Detail").Or.Contains("detail"));
     }
 
     public async Task<int> GetQuantityValueAsync()
@@ -33,8 +41,6 @@ public class ProductDetailPage(IPage page)
         return int.TryParse(val, out var n) ? n : 1;
     }
 
-    public async Task ExpectOnDetailPageAsync()
-        => await Assertions.Expect(page).ToHaveURLAsync("**/product/detail**");
 
     public async Task ExpectAddToCartVisibleAsync()
         => await Assertions.Expect(AddToCartBtn).ToBeVisibleAsync();

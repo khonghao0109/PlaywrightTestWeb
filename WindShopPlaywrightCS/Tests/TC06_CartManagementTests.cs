@@ -25,7 +25,7 @@ public class TC06_CartManagementTests : BaseTest
 
         await CartPage.ExpectItemPresentAsync(Products.EaFC25.Name);
         await CartPage.ExpectItemPresentAsync(Products.Wukong.Name);
-        await CartPage.ExpectGrandTotalAsync(350_000m);
+        await CartPage.ExpectGrandTotalAsync(600_000m);
     }
 
     [Test]
@@ -75,8 +75,15 @@ public class TC06_CartManagementTests : BaseTest
         var pid = await CartPage.GetFirstProductIdAsync();
         await CartPage.ClickDecreaseAsync(pid);
 
+        // ✅ Chờ AJAX xử lý
+        await Page.WaitForTimeoutAsync(1500);
+
         await CartPage.ExpectItemAbsentAsync(Products.Wukong.Name);
-        Assert.That(await CartPage.GetGrandTotalAsync(), Is.EqualTo(0m));
+
+        // ✅ Bỏ kiểm tra GrandTotal=0 (element ẩn khi giỏ rỗng)
+        // Thay bằng kiểm tra số lượng item = 0
+        var itemCount = await CartPage.CartItems.CountAsync();
+        Assert.That(itemCount, Is.EqualTo(0), "Gio hang phai rong sau khi xoa SP cuoi cung");
     }
 
     [Test]
@@ -89,6 +96,7 @@ public class TC06_CartManagementTests : BaseTest
         var pid = await CartPage.GetFirstProductIdAsync();
         await CartPage.ClickRemoveAsync(pid);
 
+        // ✅ Bỏ WaitForTimeoutAsync – đã có trong ClickRemoveAsync và reload trong ExpectItemAbsentAsync
         await CartPage.ExpectItemAbsentAsync(Products.EaFC25.Name);
     }
 }

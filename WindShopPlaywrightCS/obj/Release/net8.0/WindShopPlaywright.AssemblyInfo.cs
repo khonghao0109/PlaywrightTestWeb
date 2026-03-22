@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WindShopPlaywright")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+689b55a6623e47e69724eba39cc6fde2a37519c6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d11d33f0e9897e49c91dade526f6bb441d4e0d86")]
 [assembly: System.Reflection.AssemblyProductAttribute("WindShopPlaywright")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WindShopPlaywright")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

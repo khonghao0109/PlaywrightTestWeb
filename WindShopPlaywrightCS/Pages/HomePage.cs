@@ -27,12 +27,13 @@ public class HomePage(IPage page)
         => page.Locator($"section a[href*='/brand/']:has-text(\"{name}\")").First;
 
     public ILocator ProductCard(string name)
-        => page.Locator(".product-card").Filter(new LocatorFilterOptions { HasText = name });
+        => page.Locator(".product-card")
+               .Filter(new LocatorFilterOptions { HasText = name }).First;
 
     public ILocator AddToCartBtn(string name)
         => page.Locator(".product-card")
                .Filter(new LocatorFilterOptions { HasText = name })
-               .Locator(".ajax-add-to-cart");
+               .Locator(".ajax-add-to-cart").First;
 
     public async Task GoToAsync()
         => await page.GotoAsync("/", new PageGotoOptions { WaitUntil = WaitUntilState.NetworkIdle });

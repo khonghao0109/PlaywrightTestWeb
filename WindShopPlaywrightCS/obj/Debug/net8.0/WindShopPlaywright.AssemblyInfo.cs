@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WindShopPlaywright")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+93a7a4ed227c5391809a900be3bedc5f198cd2d9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d11d33f0e9897e49c91dade526f6bb441d4e0d86")]
 [assembly: System.Reflection.AssemblyProductAttribute("WindShopPlaywright")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WindShopPlaywright")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

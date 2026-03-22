@@ -3,7 +3,7 @@
   <RunConfiguration>
     <EnvironmentVariables>
       <HEADED>1</HEADED>
-      <SLOWMO>1500</SLOWMO>
+      <SLOWMO>800</SLOWMO>
     </EnvironmentVariables>
   </RunConfiguration>
 </RunSettings>

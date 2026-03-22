@@ -66,8 +66,7 @@ public class TC05_AddToCartTests : BaseTest
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
         await ProductDetailPage.ExpectBuyNowVisibleAsync();
         await ProductDetailPage.ClickBuyNowAsync();
-
-        await Assertions.Expect(Page).ToHaveURLAsync("**/cart**");
+        Assert.That(Page.Url, Does.Contain("Cart").Or.Contain("cart"));
         await CartPage.ExpectItemPresentAsync(Products.Wukong.Name);
     }
 

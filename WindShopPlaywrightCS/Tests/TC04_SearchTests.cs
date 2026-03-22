@@ -16,7 +16,9 @@ public class TC04_SearchTests : BaseTest
     public async Task TC04_001_Search_Found()
     {
         await HomePage.SearchAsync(SearchData.Existing);
-        await Assertions.Expect(Page).ToHaveURLAsync("**/product/search**");
+
+        // ✅ Dùng Assert.That thay ToHaveURLAsync
+        Assert.That(Page.Url, Does.Contain("Product/Search"));
         await SearchPage.ExpectResultContainsAsync("Wukong");
     }
 
@@ -25,7 +27,9 @@ public class TC04_SearchTests : BaseTest
     public async Task TC04_002_Search_NotFound()
     {
         await HomePage.SearchAsync(SearchData.NotFound);
-        await Assertions.Expect(Page).ToHaveURLAsync("**/product/search**");
+
+        // ✅ Dùng Assert.That
+        Assert.That(Page.Url, Does.Contain("Product/Search"));
         await SearchPage.ExpectNoResultsAsync();
     }
 
@@ -37,8 +41,7 @@ public class TC04_SearchTests : BaseTest
         await HomePage.SearchSubmitBtn.ClickAsync();
         await Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
-        var url = Page.Url;
-        Assert.That(url, Does.Not.Contain("/product/search"));
+        Assert.That(Page.Url, Does.Not.Contain("Product/Search"));
     }
 
     [Test]
@@ -46,7 +49,9 @@ public class TC04_SearchTests : BaseTest
     public async Task TC04_004_Search_CaseInsensitive()
     {
         await HomePage.SearchAsync(SearchData.CaseInsensitive);
-        await Assertions.Expect(Page).ToHaveURLAsync("**/product/search**");
+
+        // ✅ Dùng Assert.That
+        Assert.That(Page.Url, Does.Contain("Product/Search"));
         await SearchPage.ExpectResultContainsAsync("ARC Raiders");
     }
 }
