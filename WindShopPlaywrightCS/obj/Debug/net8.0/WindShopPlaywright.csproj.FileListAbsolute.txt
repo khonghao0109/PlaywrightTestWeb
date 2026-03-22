@@ -413,3 +413,4 @@ C:\Users\Asus\source\repos\TestWeb\WindShopPlaywrightCS\obj\Debug\net8.0\refint\
 C:\Users\Asus\source\repos\TestWeb\WindShopPlaywrightCS\obj\Debug\net8.0\WindShopPlaywright.pdb
 C:\Users\Asus\source\repos\TestWeb\WindShopPlaywrightCS\obj\Debug\net8.0\WindShopPlaywright.genruntimeconfig.cache
 C:\Users\Asus\source\repos\TestWeb\WindShopPlaywrightCS\obj\Debug\net8.0\ref\WindShopPlaywright.dll
+C:\Users\Asus\source\repos\TestWeb\WindShopPlaywrightCS\obj\Debug\net8.0\WindShopPlaywright.sourcelink.json

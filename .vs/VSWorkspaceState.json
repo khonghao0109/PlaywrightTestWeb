@@ -3,9 +3,8 @@
     "",
     "\\WindShopPlaywrightCS",
     "\\WindShopPlaywrightCS\\Pages",
-    "\\WindShopPlaywrightCS\\Utils",
-    "\\WindShopPlaywrightCS\\{Pages,Tests,Fixtures,Utils}"
+    "\\WindShopPlaywrightCS\\Tests",
+    "\\WindShopPlaywrightCS\\Utils"
   ],
-  "SelectedNode": "\\WindShopPlaywrightCS\\Pages\\CartPage.cs",
   "PreviewInSolutionExplorer": false
 }
