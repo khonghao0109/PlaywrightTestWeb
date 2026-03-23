@@ -1,0 +1,49 @@
+﻿{
+  "generatedAt": "2026-03-23_10-26-35",
+  "totalSeconds": 30,
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": "100%"
+  },
+  "suites": [
+    {
+      "suiteId": "TC04",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "tests": [
+        {
+          "TestId": "TC04_001_Search_Found",
+          "Description": "TC04-001 | Tim kiem san pham ton tai",
+          "Status": "Passed",
+          "duration": "7.94s",
+          "error": ""
+        },
+        {
+          "TestId": "TC04_002_Search_NotFound",
+          "Description": "TC04-002 | Tim kiem khong co ket qua",
+          "Status": "Passed",
+          "duration": "6.76s",
+          "error": ""
+        },
+        {
+          "TestId": "TC04_003_Search_EmptyKeyword",
+          "Description": "TC04-003 | Tim kiem tu khoa trong - redirect ve Index",
+          "Status": "Passed",
+          "duration": "8.19s",
+          "error": ""
+        },
+        {
+          "TestId": "TC04_004_Search_CaseInsensitive",
+          "Description": "TC04-004 | Tim kiem khong phan biet hoa thuong",
+          "Status": "Passed",
+          "duration": "7.06s",
+          "error": ""
+        }
+      ]
+    }
+  ]
+}

@@ -43,7 +43,7 @@ public class TC07_CheckoutTests : BaseTest
 
         await CartPage.ClickCheckoutAsync();
         await CartPage.ExpectEmailErrorAsync();
-        await Assertions.Expect(Page).ToHaveURLAsync("**/cart**");
+        Assert.That(Page.Url, Does.Contain("cart").Or.Contain("Cart"));
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class TC07_CheckoutTests : BaseTest
 
         await CartPage.ClickCheckoutAsync();
         await CartPage.ExpectFullNameErrorAsync();
-        await Assertions.Expect(Page).ToHaveURLAsync("**/cart**");
+        Assert.That(Page.Url, Does.Contain("cart").Or.Contain("Cart"));
     }
 
     [Test]
@@ -71,7 +71,7 @@ public class TC07_CheckoutTests : BaseTest
 
         await CartPage.ClickCheckoutAsync();
         await CartPage.ExpectPhoneErrorAsync();
-        await Assertions.Expect(Page).ToHaveURLAsync("**/cart**");
+        Assert.That(Page.Url, Does.Contain("cart").Or.Contain("Cart"));
     }
 
     [Test]

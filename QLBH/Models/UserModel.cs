@@ -10,6 +10,7 @@ namespace MyWebApp.Models
         [DataType(DataType.Password),Required(ErrorMessage="hãy nhập mật khẩu")]
         public string Password { get; set; }
         [Required(ErrorMessage = "Yêu cầu nhập Email")]
+        [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
         public string Email { get; set; }
     }
 }

@@ -1,0 +1,56 @@
+﻿{
+  "generatedAt": "2026-03-23_10-18-38",
+  "totalSeconds": 70.3,
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": "100%"
+  },
+  "suites": [
+    {
+      "suiteId": "TC07",
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "tests": [
+        {
+          "TestId": "TC07_001_CheckoutSuccess",
+          "Description": "TC07-001 | PASS - Thanh toan thanh cong - redirect QR",
+          "Status": "Passed",
+          "duration": "16.42s",
+          "error": ""
+        },
+        {
+          "TestId": "TC07_002_CheckoutFail_NoEmail",
+          "Description": "TC07-002 | FAIL - De trong Email",
+          "Status": "Passed",
+          "duration": "12.32s",
+          "error": ""
+        },
+        {
+          "TestId": "TC07_003_CheckoutFail_NoFullname",
+          "Description": "TC07-003 | FAIL - De trong Ho va ten",
+          "Status": "Passed",
+          "duration": "16.58s",
+          "error": ""
+        },
+        {
+          "TestId": "TC07_004_CheckoutFail_NoPhone",
+          "Description": "TC07-004 | FAIL - De trong So dien thoai",
+          "Status": "Passed",
+          "duration": "12.64s",
+          "error": ""
+        },
+        {
+          "TestId": "TC07_005_EmailAutoFilled",
+          "Description": "TC07-005 | Email tu dien khi da dang nhap",
+          "Status": "Passed",
+          "duration": "12.32s",
+          "error": ""
+        }
+      ]
+    }
+  ]
+}
